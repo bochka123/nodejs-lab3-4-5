@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-lab3-4-5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "npx nodemon index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bochka123/nodejs-lab3-4-5.git"
+  },
+  "author": "Oleksandr Tkach, Nazariy Tymchyshyn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bochka123/nodejs-lab3-4-5/issues"
+  },
+  "homepage": "https://github.com/bochka123/nodejs-lab3-4-5#readme",
+  "dependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
