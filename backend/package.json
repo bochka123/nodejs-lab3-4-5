@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-lab3-4-5",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
@@ -15,11 +15,8 @@
   "bugs": {
     "url": "https://github.com/bochka123/nodejs-lab3-4-5/issues"
   },
-  "homepage": "https://github.com/bochka123/nodejs-lab3-4-5#readme",
-  "dependencies": {
-    "nodemon": "^2.0.22"
-  },
   "devDependencies": {
+    "nodemon": "^2.0.22",
     "typescript": "^5.0.4"
   }
 }
