@@ -8,6 +8,7 @@ const app: Express = express();
 
 require('./db/db');
 
+app.use(express.json())
 app.use(cors());
 
 app.listen(PORT, () => {
@@ -16,4 +17,4 @@ app.listen(PORT, () => {
 });
 
 app.use('/api/v1/news', newsRouter);
-app.use('/api/v1/admin', adminRouter)
+app.use('/api/v1/admin', adminRouter);

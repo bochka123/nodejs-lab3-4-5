@@ -45,38 +45,38 @@ export class Admin {
     }
 
     static async login(req: Request, res: Response) {
-        try {
-            const err = validationResult(req);
-            if (!err.isEmpty()) {
-                return BadRequest(res, 'Error');
-            }
-
-            const {username, password}: IUserLogin = {
-                username: req.query.username as string,
-                password: req.query.password as string
-            }
-            const admin = await AdminDB.findOne({username: username});
-
-            if (!admin) {
-                return BadRequest(res, 'Wrong username');
-            }
-            admin.comparePassword(password, async (err: any, isMatch: boolean) => {
-                if (err || isMatch)
-                    return BadRequest(res, 'Invalid password');
-            })
-
-            const token = jwt.sign(
-                {id: admin._id},
-                JWTSecretKey
-            );
-            return res.status(200).json({
-                data: {
-                    token: token,
-                    admin: {username: admin.username, name: admin.name, surname: admin.surname}
-                }
-            });
-        } catch (error) {
-            return BadRequest(res, `Error: ${error}`);
+        const err = validationResult(req);
+        if (!err.isEmpty()) {
+            return BadRequest(res, 'Error');
         }
+        const {username, password}: IUserLogin = {
+            username: req.body.username as string,
+            password: req.body.password as string
+        }
+        const admin = await AdminDB.findOne({username: username});
+
+        if (!admin) {
+            return BadRequest(res, 'Wrong username');
+        }
+        const result = await admin.comparePassword(password);
+        if (!result) {
+            return BadRequest(res, 'Invalid password');
+        }
+
+        const token = jwt.sign(
+            {id: admin._id},
+            JWTSecretKey
+        );
+        return res.status(200).json({
+            data: {
+                token: token,
+                admin: {username: admin.username, name: admin.name, surname: admin.surname}
+            }
+        });
+        //     try {
+        //
+        // } catch (error) {
+        //     return BadRequest(res, `Error: ${error}`);
+        // }
     }
 }

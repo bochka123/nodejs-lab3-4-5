@@ -3,5 +3,5 @@ export interface IAdmin {
     password: string;
     name: string;
     surname: string;
-    comparePassword(candidatePassword: string, cb: (arg: any, isMatch: boolean) => void): void;
+    comparePassword(candidatePassword: string): boolean;
 }

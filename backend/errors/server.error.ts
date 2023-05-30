@@ -8,7 +8,7 @@ export class ServerError extends Error {
         this.errors = errors;
     }
 
-    static UnauthorizedError(errors: Error[] = []) {
+    static InternalServerError(errors: Error[] = []) {
         return new ServerError(500, 'Internal server error', errors);
     }
 }

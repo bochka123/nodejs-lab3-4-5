@@ -25,20 +25,21 @@ export class News {
     static async createNews(req: Request, res: Response) {
         try {
             const date = new Date();
-
+            console.log(req.body)
             const newsData: INews = {
-                title: req.query.title as string,
-                content: req.query.content as string,
-                category: req.query.category as 'politics' | 'sports' | 'celebrities' | 'travel',
-                createdBy: req.query.createdBy as string,
+                title: req.body.title as string,
+                content: req.body.content as string,
+                category: req.body.category as 'politics' | 'sports' | 'celebrities' | 'travel',
+                createdBy: req.body.createdBy as string,
                 createdAt: date,
                 updatedAt: date
             };
             const news = new NewsDB(newsData);
+            console.log(newsData);
             await news.save();
             return res.status(200).json(news);
         } catch (error) {
-            return BadRequest(res, 'Wrong parameters of news');
+            return BadRequest(res, `Wrong parameters of news ${error}` );
         }
     }
 

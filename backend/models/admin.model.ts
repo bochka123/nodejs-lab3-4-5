@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import { ServerError } from "../errors/server.error";
 
 import { IAdmin } from "../types/admin.type";
 
@@ -27,15 +28,21 @@ adminSchema.pre('save', function (next) {
     }
 });
 
+// adminSchema.methods.comparePassword = function (
+//     candidatePassword: string,
+//     cb: (arg: any, isMatch?: boolean) => void
+// ) {
+//     bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+//         if (err) return cb(err);
+//         cb(null, isMatch);
+//     });
+// };
+
 adminSchema.methods.comparePassword = function (
-    candidatePassword: string,
-    cb: (arg: any, isMatch?: boolean) => void
+    candidatePassword: string
 ) {
-    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
-};
+    return bcrypt.compareSync(candidatePassword, this.password);
+}
 
 const Admin = mongoose.model<IAdmin>('Admin', adminSchema);
 export default Admin;
