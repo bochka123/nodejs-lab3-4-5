@@ -1,5 +1,8 @@
 <main>
-  <h1>{{news.title}}</h1>
+  <div class="container">
+    <h1>{{news.title}}</h1>
+    <button (click)="deleteNews()">Delete news</button>
+  </div>
   <div class="content">
     {{news.content}}
   </div>
