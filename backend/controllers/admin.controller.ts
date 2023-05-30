@@ -2,62 +2,81 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 
-import Admin from '../models/admin.model'
-import { IAdmin } from "../types/admin.type";
+import AdminDB from '../models/admin.model'
 import {IUserLogin} from "../types/user.login.type";
 import {JWTSecretKey} from "../config";
+import {BadRequest} from "../errors/api.error";
 
-export const register = async (req: Request, res: Response) => {
-    const { username, password, name, surname }: IAdmin = req.body;
-    try {
-        const err = validationResult(req);
-        if (!err.isEmpty()) {
-            return res.status(400).json({'message': `Failed`});
-        }
+export class Admin {
+    static async register(req: Request, res: Response) {
 
-        const admin = new Admin({
-            username,
-            password,
-            name,
-            surname
-        })
-
-        await admin.save();
-        return res.status(201).json({'message': `User registered successfully!`});
-    } catch (error) {
-        return res.status(500).json({'message': `Error`});
-    }
-}
-
-export const login = async (req: Request, res: Response) => {
-    const { username, password }: IUserLogin = req.body;
-    try {
-        const err = validationResult(req);
-        if (!err.isEmpty()) {
-            return res.status(400).json({'message': `Failed`});
-        }
-
-        const admin = await Admin.findOne({username: username});
-
-        if (!admin) {
-            return res.status(400).json({'message': `Wrong login`});
-        }
-        admin.comparePassword(password, async (err: any, isMatch: boolean) => {
-            if (err || isMatch)
-                return res.status(400).json({'message': `Invalid password`});
-        })
-
-        const token = jwt.sign(
-            {id: admin._id},
-            JWTSecretKey
-        );
-        return res.status(200).json({
-            data: {
-                token: token,
-                admin: {username: admin.username, name: admin.name, surname: admin.surname}
+        try {
+            const err = validationResult(req);
+            if (!err.isEmpty()) {
+                return BadRequest(res, `Error: ${err}`);
             }
-        });
-    } catch (error) {
-        return res.status(500).json({'message': `Error`});
+
+            const possibleAdmin = await AdminDB.findOne({username: req.query.username});
+
+            if (possibleAdmin)
+                return BadRequest(res, 'Admin with this username already exists')
+
+            const admin = new AdminDB({
+                username: req.query.username as string,
+                password: req.query.password as string,
+                name: req.query.name as string,
+                surname: req.query.surname as string
+            });
+
+            await admin.save();
+            const token = jwt.sign(
+                {id: admin._id},
+                JWTSecretKey
+            );
+            return res.status(200).json({
+                data: {
+                    token: token,
+                    admin: {username: admin.username, name: admin.name, surname: admin.surname}
+                }
+            });
+        } catch (error) {
+            return BadRequest(res, `Error: ${error}`);
+        }
+    }
+
+    static async login(req: Request, res: Response) {
+        try {
+            const err = validationResult(req);
+            if (!err.isEmpty()) {
+                return BadRequest(res, 'Error');
+            }
+
+            const {username, password}: IUserLogin = {
+                username: req.query.username as string,
+                password: req.query.password as string
+            }
+            const admin = await AdminDB.findOne({username: username});
+
+            if (!admin) {
+                return BadRequest(res, 'Wrong username');
+            }
+            admin.comparePassword(password, async (err: any, isMatch: boolean) => {
+                if (err || isMatch)
+                    return BadRequest(res, 'Invalid password');
+            })
+
+            const token = jwt.sign(
+                {id: admin._id},
+                JWTSecretKey
+            );
+            return res.status(200).json({
+                data: {
+                    token: token,
+                    admin: {username: admin.username, name: admin.name, surname: admin.surname}
+                }
+            });
+        } catch (error) {
+            return BadRequest(res, `Error: ${error}`);
+        }
     }
 }

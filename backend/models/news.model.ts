@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { INews } from "../types/news.type";
 
 const newsSchema = new mongoose.Schema({
-    id: { type: Number, required: true },
     title: { type: String, required: true },
     content: { type: String, required: true },
     createdBy: { type: String, required: true },
