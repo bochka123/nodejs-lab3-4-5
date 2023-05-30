@@ -6,12 +6,14 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { NewNewsModalComponent } from './new-news-modal/new-news-modal.component';
 import { LogInModalComponent } from './log-in-modal/log-in-modal.component';
 import { SignUpModalComponent } from './sign-up-modal/sign-up-modal.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+    ],
   declarations: [
     HeaderComponent,
     FooterComponent,

@@ -1,9 +1,9 @@
 <div class="container">
   <h1>Add news</h1>
-  <form>
-    <input type="text" placeholder="title">
-    <textarea></textarea>
-    <select>
+  <form [formGroup]="form" (ngSubmit)="addNews()">
+    <input type="text" placeholder="title" formControlName="title">
+    <textarea formControlName="content"></textarea>
+    <select formControlName="category">
       <option>Politics</option>
       <option>Sports</option>
       <option>Celebrities</option>

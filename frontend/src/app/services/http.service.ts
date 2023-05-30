@@ -23,7 +23,7 @@ export class HttpService {
     return this.httpClient.post<T>(this.buildUrl(url), resource).pipe(catchError(this.handleError));
   }
 
-  delete(url: string, id: string | number) {
+  delete(url: string, id: string | number | undefined) {
     return this.httpClient.delete(`${this.buildUrl(url)}/${id}`).pipe(catchError(this.handleError));
   }
 
