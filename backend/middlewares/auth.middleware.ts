@@ -16,6 +16,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
         req.query.user = jwt.verify(token, JWTSecretKey);
         next();
     } catch (error) {
-        return next(Unauthorized(res));
+        return Unauthorized(res);
     }
 }
