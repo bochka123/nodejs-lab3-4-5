@@ -1,8 +1,9 @@
 <header>
-  <h1>News</h1>
+  <button (click)="openNewNewsModal()" *ngIf="userIn">Add news</button>
+  <h1 [ngClass]="{'in': userIn, 'not-in': !userIn}">News</h1>
   <ul>
     <li (click)="openLogInModal()">Log in</li>
-    <li>Sign up</li>
+    <li (click)="openSignUpModal()">Sign up</li>
   </ul>
 </header>
 
