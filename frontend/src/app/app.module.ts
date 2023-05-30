@@ -4,17 +4,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SharedModule} from "./shared/shared.module";
-import {NewsModule} from "./modules/news/news.module";
+import {NewsPageComponent} from "./components/news-page/news-page.component";
+import { NewsComponent } from './components/news/news.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NewsPageComponent,
+    NewsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    NewsModule
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   exports: [],
