@@ -71,6 +71,8 @@ export class News {
             };
             NewsDB.updateOne({_id: req.params['id']}, newsData);
             return res.status(200);
+        } catch (error) {
+            return BadRequest(res, `Wrong id of news or wrong news parameters`);
         }
     }
 }
