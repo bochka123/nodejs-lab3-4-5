@@ -6,8 +6,8 @@ const newsRouter = express.Router()
 
 newsRouter.get('/', News.getAllNews);
 newsRouter.get('/:id', News.getSingleNews);
-newsRouter.post('/', authMiddleware);
-newsRouter.delete('/:id', authMiddleware);
+newsRouter.post('/', authMiddleware, News.createNews);
+newsRouter.delete('/:id', authMiddleware, News.deleteNews);
 newsRouter.put('/:', authMiddleware);
 
 export default newsRouter;

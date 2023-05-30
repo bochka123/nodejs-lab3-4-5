@@ -1,22 +1,13 @@
-export class ApiError extends Error {
-    status;
-    errors;
+import { Response } from 'express';
 
-    constructor(status: number, message: string, errors: Error[] = []) {
-        super(message);
-        this.status = status;
-        this.errors = errors;
-    }
+export function BadRequest(res: Response, message: string) {
+    return res.status(400).json({'message': message});
+}
 
-    static BadRequest(message: string, errors: Error[] = []) {
-        return new ApiError(400, message, errors);
-    }
+export function Unauthorized(res: Response) {
+    return res.status(401);
+}
 
-    static Unauthorized() {
-        return new ApiError(401, 'User not authorized');
-    }
-
-    static NotFound() {
-        return new ApiError(404, 'Page not found');
-    }
+export function NotFound(res: Response) {
+    return res.status(404);
 }
