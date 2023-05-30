@@ -14,6 +14,6 @@ export class NewsComponent {
   }
 
   deleteNews() {
-    this.httpService.delete("/api/v1/news/", this.news._id);
+    this.httpService.delete("/api/v1/news/", this.news._id).subscribe();
   }
 }
