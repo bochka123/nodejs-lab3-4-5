@@ -7,11 +7,10 @@ export default (req: Request, res: Response, next: NextFunction) => {
     try {
         const authHeader = req.headers.authorization;
 
-        console.log('check');
+
         if (!authHeader) {
             return Unauthorized(res);
         }
-        console.log('check');
 
         const token = authHeader.split(' ')[1];
         req.query.user = jwt.verify(token, JWTSecretKey);

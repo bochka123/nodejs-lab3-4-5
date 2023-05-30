@@ -11,11 +11,15 @@ export class News {
     }
 
     static async getSingleNews(req: Request, res: Response) {
-        const singleNews = await NewsDB.find({id: req.params['_id']});
-        if (!singleNews.length)
-            return BadRequest(res, `ID ${req.params['_id']} was not found`)
+        try {
+            const singleNews = await NewsDB.findOne({_id: req.params['id']});
+            if (!singleNews)
+                return BadRequest(res, `ID ${req.params['id']} was not found`)
 
-        res.status(200).json(singleNews[0])
+            res.status(200).json(singleNews)
+        } catch (error) {
+            return BadRequest(res, 'Wrong id of news')
+        }
     }
 
     static async createNews(req: Request, res: Response) {
@@ -40,14 +44,14 @@ export class News {
 
     static async deleteNews(req: Request, res: Response) {
         try {
-            const news = await NewsDB.find({id: req.params['_id']});
-            if (!news.length)
-                return BadRequest(res, `ID ${req.params['_id']} was not found`)
+            const news = await NewsDB.findOne({_id: req.params['id']});
+            if (!news)
+                return BadRequest(res, `ID ${req.params['id']} was not found`)
 
-            await NewsDB.deleteOne({id: req.params['_id']})
-            return res.status(200).json(news);
+            await NewsDB.deleteOne({_id: req.params['id']})
+            return res.status(204);
         } catch (error) {
-            return BadRequest(res, `Error: ${error}`);
+            return BadRequest(res, `Wrong id of news`);
         }
     }
 
