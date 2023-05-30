@@ -55,4 +55,24 @@ export class News {
         }
     }
 
+    static async updateNews(req: Request, res: Response) {
+        try {
+            const news = await NewsDB.findOne({_id: req.params['id']});
+            if (!news)
+                return BadRequest(res, `ID ${req.params['id']} was not found`)
+
+            const date = new Date();
+            const newsData = {
+                title: req.query.title as string,
+                content: req.query.content as string,
+                category: req.query.category as 'politics' | 'sports' | 'celebrities' | 'travel',
+                createdBy: req.query.createdBy as string,
+                updatedAt: date
+            };
+            NewsDB.updateOne({_id: req.params['id']}, newsData);
+            return res.status(200);
+        } catch (error) {
+            return BadRequest(res, `Wrong id of news or wrong news parameters`);
+        }
+    }
 }
