@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {INews} from "../../models/INews";
+import {HttpService} from "../../services/http.service";
 
 @Component({
   selector: 'app-new-news-modal',
@@ -6,4 +9,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./new-news-modal.component.sass']
 })
 export class NewNewsModalComponent {
+
+  constructor(private httpService: HttpService) {
+  }
+  form = new FormGroup({
+    title: new FormControl(''),
+    content: new FormControl(''),
+    category: new FormControl('')
+  });
+
+  addNews() {
+    const news: INews = {
+      title: this.form.controls.title.value,
+      content: this.form.controls.content.value,
+      category: this.form.controls.category.value?.toLowerCase(),
+      createdBy: "admin"
+    };
+    console.log(news);
+    this.httpService.post<INews>("/api/v1/news", news).subscribe();
+  }
 }
