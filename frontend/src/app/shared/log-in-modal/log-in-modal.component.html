@@ -1,8 +1,8 @@
 <div class="container">
   <h1>Log in</h1>
-  <form>
-    <input type="text" placeholder="Login">
-    <input type="text" placeholder="Password">
+  <form [formGroup]="form" (ngSubmit)="logIn()">
+    <input type="text" placeholder="Login" formControlName="login">
+    <input type="text" placeholder="Password" formControlName="password">
     <input type="submit" value="Log in">
   </form>
 </div>

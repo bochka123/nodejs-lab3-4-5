@@ -25,7 +25,6 @@ export class NewNewsModalComponent {
       category: this.form.controls.category.value?.toLowerCase(),
       createdBy: "admin"
     };
-    console.log(news);
     this.httpService.post<INews>("/api/v1/news", news).subscribe();
   }
 }
