@@ -25,7 +25,6 @@ export class News {
     static async createNews(req: Request, res: Response) {
         try {
             const date = new Date();
-            console.log(req.body)
             const newsData: INews = {
                 title: req.body.title as string,
                 content: req.body.content as string,
@@ -35,7 +34,6 @@ export class News {
                 updatedAt: date
             };
             const news = new NewsDB(newsData);
-            console.log(newsData);
             await news.save();
             return res.status(200).json(news);
         } catch (error) {
