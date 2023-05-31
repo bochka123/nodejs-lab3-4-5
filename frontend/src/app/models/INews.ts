@@ -3,5 +3,6 @@ export interface INews {
   title: string | null,
   content: string | null,
   createdBy: string | null,
+  updatedAt?: string | null,
   category: string | null | undefined
 }

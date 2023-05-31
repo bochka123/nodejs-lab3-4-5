@@ -23,6 +23,9 @@ export class LogInModalComponent {
       username: this.form.controls.login.value,
       password: this.form.controls.password.value
     };
-    this.httpService.post<IUser>("/api/v1/admin/login", user).subscribe();
+    this.httpService.post<any>("/api/v1/admin/login", user).subscribe((user) => {
+      localStorage.setItem("user", JSON.stringify(user.data.admin));
+      location.reload();
+    });
   }
 }

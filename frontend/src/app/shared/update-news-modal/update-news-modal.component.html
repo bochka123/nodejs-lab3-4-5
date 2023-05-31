@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>Update news</h1>
+  <form [formGroup]="form" (ngSubmit)="updateNews()">
+    <input type="text" placeholder="title" formControlName="title">
+    <textarea formControlName="content"></textarea>
+    <select formControlName="category">
+      <option>Politics</option>
+      <option>Sports</option>
+      <option>Celebrities</option>
+      <option>Travel</option>
+    </select>
+    <input type="submit" value="Update news">
+  </form>
+</div>
