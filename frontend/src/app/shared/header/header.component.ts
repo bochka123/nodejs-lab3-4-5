@@ -10,20 +10,26 @@ import {NewNewsModalComponent} from "../new-news-modal/new-news-modal.component"
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent {
-  userIn: boolean = true;
+  user: any = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") as string) : null;
   constructor(
     private dialogRef: MatDialog
-  ) {}
+  ) {
+  }
 
   openLogInModal() {
-    this.dialogRef.open(LogInModalComponent)
+    this.dialogRef.open(LogInModalComponent);
   }
 
   openSignUpModal() {
-    this.dialogRef.open(SignUpModalComponent)
+    this.dialogRef.open(SignUpModalComponent);
   }
 
   openNewNewsModal() {
-    this.dialogRef.open(NewNewsModalComponent)
+    this.dialogRef.open(NewNewsModalComponent);
+  }
+
+  logOut() {
+    localStorage.removeItem("user");
+    location.reload();
   }
 }

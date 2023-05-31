@@ -7,6 +7,7 @@ import { NewNewsModalComponent } from './new-news-modal/new-news-modal.component
 import { LogInModalComponent } from './log-in-modal/log-in-modal.component';
 import { SignUpModalComponent } from './sign-up-modal/sign-up-modal.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { UpdateNewsModalComponent } from './update-news-modal/update-news-modal.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     NotFoundComponent,
     NewNewsModalComponent,
     LogInModalComponent,
-    SignUpModalComponent
+    SignUpModalComponent,
+    UpdateNewsModalComponent
   ],
   exports: [
     CommonModule,

@@ -19,12 +19,14 @@ export class NewNewsModalComponent {
   });
 
   addNews() {
+    const createdBy: string = JSON.parse(localStorage.getItem("user") as string).username;
     const news: INews = {
       title: this.form.controls.title.value,
       content: this.form.controls.content.value,
       category: this.form.controls.category.value?.toLowerCase(),
-      createdBy: "admin"
+      createdBy: createdBy
     };
     this.httpService.post<INews>("/api/v1/news", news).subscribe();
+    location.reload();
   }
 }
