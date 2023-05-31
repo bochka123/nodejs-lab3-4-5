@@ -47,8 +47,8 @@ export class News {
             if (!news)
                 return BadRequest(res, `ID ${req.params['id']} was not found`)
 
-            await NewsDB.deleteOne({_id: req.params['id']})
-            return res.status(204);
+            await NewsDB.deleteOne({_id: req.params['id']});
+            return res.status(204).send();
         } catch (error) {
             return BadRequest(res, `Wrong id of news`);
         }
@@ -61,7 +61,9 @@ export class News {
                 return BadRequest(res, `ID ${req.params['id']} was not found`)
 
             await NewsDB.updateOne({_id: req.params['id']}, req.body);
-            return res.status(200);
+            const date = new Date();
+            await NewsDB.updateOne({_id: req.params['id']}, {updatedAt: date});
+            res.status(204).send();
         } catch (error) {
             return BadRequest(res, `Wrong id of news or wrong news parameters`);
         }
